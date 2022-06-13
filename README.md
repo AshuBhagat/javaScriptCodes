@@ -1,0 +1,3 @@
+# javaScriptCodes
+shortTrickAndFunction
+DateAndTimeFunction
