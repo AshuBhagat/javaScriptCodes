@@ -1,0 +1,33 @@
+function getTime(){
+                var today=new Date();
+                var h=today.getHours();
+                var m=today.getMinutes();
+                var s=today.getSeconds();
+                m=checkTime(m);
+                s=checkTime(s);
+                document.getElementById('txt').value=h+":"+m+":"+s;
+                document.getElementById('timepicker1').value=h+":"+m+":"+s;
+                //setTimeout(function(){getTime()},1000);
+            }
+                function checkTime(i){
+                    if(i<10){
+                        i='0'+i;
+                    }
+                    return i;
+                }
+function getCurrentDate(){
+             	var todayDate=new Date();
+            	var date=todayDate.getDate();
+            	if(date<10)
+            	{
+            		date='0'+date
+            	}
+            	var month=todayDate.getMonth();
+            	month=month+1;
+            	if(month<10)
+            	{
+            		month='0'+month
+            	}
+            	var year=todayDate.getFullYear();
+            	document.getElementById('fieldId').value=year+"-"+month+"-"+date;
+            }
