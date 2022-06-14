@@ -1,15 +1,18 @@
+<form action="InsertServlet" method="post" name="nameofFormAbc" onsubmit="return checkValid()">
+</form>
+<script>
 function checkValid()
 {
-  var field1=nameofForm.field1Id.value;
+  var field1=nameofFormAbc.field1Id.value;
   key=true;
   if(field1==="")
   {
-  		nameofForm.field1Id.style.border = "2px solid #d66";
+  		nameofFormAbc.field1Id.style.border = "2px solid #d66";
   		key=false;
   }
   else
   {
-  		nameofForm.field1Id.style.border = "";
+  		nameofFormAbc.field1Id.style.border = "";
   }
  var price=document.getElementById("pricefield").value;
  if(price==="")
@@ -23,3 +26,16 @@ function checkValid()
   }
 return key;
 }
+var sessionName='<%= session.getAttribute("department") %>'; // java session get in script
+function goToHome()
+{
+	if(sessionName=="admin")
+	{	
+		window.location = "index.jsp";
+	}
+	if(sessionName=="sales")
+	{	
+		window.location = "EmployeeHome.jsp";
+	}
+}
+</script>
