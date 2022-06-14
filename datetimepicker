@@ -1,0 +1,8 @@
+<link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css"></link>
+<script src="js/jquery.datetimepicker.js"></script>
+$(function() 
+	{
+		 //jQuery('#datetimepicker').datetimepicker();
+			jQuery('#expenseDate').datetimepicker({format:'Y-m-d',theme:'dark',timepicker:false,closeOnDateSelect:true});
+			
+});
