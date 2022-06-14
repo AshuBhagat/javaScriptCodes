@@ -1,0 +1,25 @@
+function checkValid()
+{
+  var field1=nameofForm.field1Id.value;
+  key=true;
+  if(field1==="")
+  {
+  		nameofForm.field1Id.style.border = "2px solid #d66";
+  		key=false;
+  }
+  else
+  {
+  		nameofForm.field1Id.style.border = "";
+  }
+ var price=document.getElementById("pricefield").value;
+ if(price==="")
+  {
+  		document.getElementById("pricefield").style.border = "2px solid #d66";
+		key=false; 
+  }
+  else
+  {
+  		document.getElementById("pricefield").style.border = "";
+  }
+return key;
+}
