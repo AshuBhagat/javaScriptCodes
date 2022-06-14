@@ -1,0 +1,124 @@
+<!-- *************SESSION CHECK*************************************/ -->
+<%@page session="false"%>
+<%@page import="com.abc.service.authorise.Authorise"%>
+<%
+HttpSession hsession = request.getSession(false);
+    Authorise auth=new Authorise(request, response);
+    if(!auth.isValid() )
+    {
+		response.sendRedirect("login.jsp");
+    }
+    else if(hsession.getAttribute("employeeId")==null){
+		response.sendRedirect("login.jsp");
+    }else{
+        int employeeId9=0;
+      	String empSessionFirstLastName=(String)hsession.getAttribute("empSessionFirstLastName");
+      	employeeId9=Integer.parseInt( hsession.getAttribute("employeeId").toString());
+		//int employeeId9=(Integer)hsession.getAttribute("employeeId");
+		
+%>
+<!-- *************SESSION CHECK Done*************************************/ -->
+
+ <%@ include file="HomeHeader.jsp" %>
+<%
+	JSONObject aPermission=null;
+	String aPermissObj = new AssignPermissionDao().getByEmpIdJsonData(employeeId9);
+    if(!Strings.isNullOrEmpty(aPermissObj))
+    {
+       		aPermission= new JSONObject(aPermissObj);	
+    }
+	if(aPermission.getBoolean("showClientPage")==true)
+	{
+	long clientId = Long.parseLong(request.getParameter("clientId"));
+	String clientObj = new ClientDao().getClientById(clientId);
+	JSONObject client=null;
+	String occupation1="";
+	if(!Strings.isNullOrEmpty(clientObj))
+	{
+		client=new JSONObject(clientObj);
+		cname=client.getString("cname");
+		//System.out.println("comming from json Occ=====>"+cname);
+	}
+%>
+	
+<%if(client!=null)
+{
+%>
+<html>
+<body>
+<div class="section"  id="ShowSpan"></div>
+</body>
+</html>
+<script>
+function sendFollowup()
+{
+			var fieldType1 = ClientIdsForm.fieldTypeId1.value;
+			var fromDate = ClientIdsForm.fromDate.value;
+			var toDate = ClientIdsForm.toDate.value;
+			var clientId=ClientIdsForm.clientIds.value;
+			key=true;
+			if (fieldType1=== "") 
+			{
+				ClientIdsForm.fieldTypeId1.style.border = "2px solid #d66";
+				key = false;
+			}
+			 else 
+			 {
+				ClientIdsForm.fieldTypeId1.style.border = "";
+			}
+			if (fromDate === "")
+			{			 
+					document.getElementById("fromDate").style.border = "2px solid #d66";
+					key = false;
+			} 
+			else
+			{
+					document.getElementById("fromDate").style.border = "";
+			}
+			if (toDate === "")
+			{
+					document.getElementById("toDate").style.border = "2px solid #d66";
+					key = false;
+			} 
+			else
+			{
+				document.getElementById("toDate").style.border = "";
+			}
+			
+			document.getElementById("ShowSpan").style.display = "block";
+			var url="ShowClientByAjax.jsp?fromDate="+fromDate+"&toDate="+toDate+"&followupType1="+followupType1+"&ClientId="+clientId;
+			
+			if (window.XMLHttpRequest) 
+		{
+			request = new XMLHttpRequest();
+		}
+		 else if (window.ActiveXObject) 
+		 {
+			request = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		try 
+		{
+				request.onreadystatechange = getInfoClient;
+				request.open("GET", url, true);
+				if(!key)
+				{
+				return key;
+				}
+				request.send();
+		}
+		 catch (e) 
+		 {
+			alert("Unable to connect to server send client date search block");
+		}	
+  }
+  function getInfoClient() 
+	{
+		if (request.readyState == 4) 
+		{
+			var val = request.responseText;
+			document.getElementById('ShowSpan').innerHTML = val;
+		}
+	}
+</script>
+
+<%}}}%>
