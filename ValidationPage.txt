@@ -1,6 +1,59 @@
 <form action="InsertServlet" method="post" name="nameofFormAbc" onsubmit="return checkValid()">
 </form>
 <script>
+var SearchValue= document.getElementById("searchByParameter").value;
+
+const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/;
+	//var pattern = new RegExp("^[0-9]{10}$");
+var number = new RegExp("^[0-9]+$");
+	//var mobilenumber =/^\d{10}$/;
+var alphabetic=/^[a-z A-Z]+$/;
+      /* var character=/^[ A-Za-z0-9_@./#+-]+$/; */
+ if(number.test(SearchValue))
+{
+	$("#searchByParameter").css({"color":"black","background-color":""});
+	if(SearchValue.length<=10 && SearchValue.startsWith("1")==false && SearchValue.startsWith("14")==false && SearchValue.startsWith("12")==false)
+        {
+		
+	}
+}
+if(emailRegex.test(SearchValue))
+{
+	//logic for email
+}
+if(alphabetic.test(SearchValue))
+{
+       var url="getClientFirstNameAutoAjax.jsp?inputType="+SearchValue;
+    	if (window.XMLHttpRequest) 
+	{
+		request = new XMLHttpRequest();
+	}
+	else if (window.ActiveXObject) 
+	{
+		request = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	try 
+	{
+		request.onreadystatechange = getInfoReferralReportByName;
+		request.open("GET", url, true);
+		request.send();
+	}
+	catch (e) 
+	{
+		alert("Unable to connect to server send client date search block");
+	}	
+        	
+ }
+ function getInfoReferralReportByName() 
+{
+	if (request.readyState == 4) 
+	{
+		var val = request.responseText;
+		//document.getElementById('searchByParameter').innerHTML = val;
+		document.getElementById('autoSearchResult').innerHTML = val;
+	}
+}
 function checkValid()
 {
   var field1=nameofFormAbc.field1Id.value;
@@ -46,4 +99,27 @@ function isInt(n)
 {
 	return !isNaN(parseInt(n)) && isFinite(n);
 }
+function validatePhone(fld)
+  {
+  	//alert(fld);
+                var error = "";
+                var stripped = fld.value.replace(/[\(\)\.\-\ ]/g, '');
+
+                if (fld.value == "") 
+                {//alert(" blank");
+                    error = "You didn't enter a phone number.\n";
+                    fld.style.background = 'Yellow';
+                }
+                else if (isNaN(parseInt(stripped))) 
+                {//alert(" is Not NaN ");
+                    error = "The phone number contains illegal characters.\n";
+                    fld.style.background = 'Yellow';
+                }
+                else if (!(stripped.length == 10)) 
+                {//alert("length ");
+                    error = "The phone number is the wrong length. Make sure you Enter 10 Digit .\n";
+                    fld.style.background = 'Yellow';
+                }
+                return error;
+ }
 </script>
