@@ -38,4 +38,12 @@ function goToHome()
 		window.location = "EmployeeHome.jsp";
 	}
 }
+function isFloat(n) 
+{
+	return !isNaN(parseFloat(n)) && isFinite(n);
+}
+function isInt(n) 
+{
+	return !isNaN(parseInt(n)) && isFinite(n);
+}
 </script>
